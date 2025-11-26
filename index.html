@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ático Vivo</title>
+    <meta
+      name="description"
+      content="Ático Vivo es una plataforma moderna de proyectos colaborativos que conecta equipos, espacios, talento humano y posibles proyectos."
+    />
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@300;400;500;600;700;800&display=swap');
+
+      :root {
+        --color-equipos: #6366f1;
+        --color-espacios: #14b8a6;
+        --color-talento: #f97316;
+        --color-proyectos: #ec4899;
+        --color-accent: #8b5cf6;
+        --color-bg-dark: #0a0e1a;
+        --color-bg-darker: #050711;
+        --color-text-light: #f8fafc;
+        --color-text-muted: #94a3b8;
+      }
+
+      body,
+      html {
+        color: var(--color-text-light);
+        background: var(--color-bg-darker);
+        font-family: 'Outfit', sans-serif;
+      }
+
+      .glassmorphism {
+        background: rgba(10, 14, 26, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      }
+
+      .sidebar-bg {
+        background: rgba(99, 102, 241, 0.85);
+        backdrop-filter: blur(12px);
+      }
+
+      .gradient-text {
+        background: linear-gradient(135deg, #14b8a6 0%, #6366f1 50%, #8b5cf6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-family: 'Sora', sans-serif;
+        letter-spacing: -0.03em;
+      }
+
+      .cta-button {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+        background-size: 200% 200%;
+        box-shadow: 0 0 40px rgba(139, 92, 246, 0.5), 0 4px 20px rgba(0, 0, 0, 0.3);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cta-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+      }
+
+      .cta-button:hover::before {
+        left: 100%;
+      }
+
+      .cta-button:hover {
+        box-shadow: 0 0 60px rgba(139, 92, 246, 0.7), 0 8px 30px rgba(0, 0, 0, 0.4);
+        transform: translateY(-3px) scale(1.02);
+        background-position: 100% 50%;
+      }
+
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-12px) rotate(5deg);
+        }
+      }
+
+      .float-animation {
+        animation: float 4s ease-in-out infinite;
+      }
+
+      @keyframes gradient-shift {
+        0%, 100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      .gradient-animate {
+        background-size: 200% 200%;
+        animation: gradient-shift 8s ease infinite;
+      }
+
+      .nav-item {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+        color: #ffffff;
+      }
+
+      .nav-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 4px;
+        background: currentColor;
+        transform: scaleY(0);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 0 4px 4px 0;
+      }
+
+      .nav-item::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: currentColor;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        border-radius: 16px;
+      }
+
+      .nav-item:hover::after {
+        opacity: 0.08;
+      }
+
+      .nav-item:hover {
+        transform: translateX(6px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-item.active::before {
+        transform: scaleY(1);
+      }
+
+      .nav-item.active::after {
+        opacity: 0.12;
+      }
+
+      .nav-item.active {
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .nav-item:hover,
+      .nav-item.active {
+        background: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+      }
+
+      .modal-overlay {
+        background-color: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(8px);
+      }
+
+      .tooltip {
+        position: absolute;
+        background: rgba(10, 14, 26, 0.98);
+        color: #f8fafc;
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+        font-size: 0.875rem;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        z-index: 1000;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(12px);
+        line-height: 1.5;
+      }
+
+      .tooltip.show {
+        opacity: 1;
+      }
+
+      @keyframes pulse-ring {
+        0% {
+          transform: scale(0.95);
+          opacity: 0.7;
+        }
+        50% {
+          transform: scale(1.05);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(0.95);
+          opacity: 0.7;
+        }
+      }
+
+      .pulse-ring {
+        animation: pulse-ring 2s ease-in-out infinite;
+      }
+
+      .card {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 1.5rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(12px);
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+        background: rgba(15, 23, 42, 0.8);
+        border-color: rgba(255, 255, 255, 0.15);
+      }
+
+      .card-title {
+        font-family: 'Sora', sans-serif;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #f8fafc;
+        margin-bottom: 0.75rem;
+      }
+
+      .card-description {
+        font-size: 0.875rem;
+        color: #94a3b8;
+        line-height: 1.6;
+      }
+
+      .card-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 0.75rem;
+      }
+
+      .project-type-card {
+        cursor: pointer;
+        border: 2px solid transparent;
+      }
+
+      .project-type-card:hover {
+        border-color: #8b5cf6;
+        box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3);
+      }
+
+      .sidebar-title {
+        font-family: 'Sora', sans-serif;
+        letter-spacing: -0.02em;
+        color: #f8fafc;
+      }
+
+      .logo-container {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+      }
+    </style>
+    <link rel="stylesheet" href="globals.css" />
+  </head>
+  <body class="font-sans text-neutral-foreground" style="font-family: 'Outfit', sans-serif;">
+    <!-- Header -->
+    <header
+      class="glassmorphism h-24 flex items-center justify-between px-8 sticky top-0 z-50"
+        style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);"
+    >
+      <div class="flex items-center">
+        <h1 class="font-bold gradient-text" style="font-size: 50px; line-height: 1;">Ático Vivo</h1>
+      </div>
+
+      <button
+        id="openModalBtn"
+        class="cta-button font-semibold text-base tracking-wide"
+        style="padding: 1.25rem 3rem; border-radius: 50px; color: white;"
+        aria-label="Abrir modal para iniciar nuevo proyecto"
+      >
+        ¿Qué tipo de proyecto quieres hacer hoy?
+      </button>
+
+      <!-- Mobile Menu Toggle -->
+      <button
+        id="mobileMenuToggle"
+        class="lg:hidden glassmorphism text-white p-3 rounded-lg"
+        aria-label="Abrir menú de navegación"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="flex" style="height: calc(100vh - 6rem);">
+      <!-- Sidebar Navigation -->
+      <aside
+        id="sidebar"
+        class="w-full lg:w-1/5 sidebar-bg p-8 overflow-y-auto fixed lg:static inset-0 top-20 z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300"
+        role="navigation"
+        aria-label="Navegación principal"
+        style="border-right: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 2px 0 12px rgba(0, 0, 0, 0.2);"
+      >
+        <nav>
+          <ul class="space-y-4">
+            <li>
+              <a
+                href="#equipos"
+                class="nav-item flex items-center p-5 cursor-pointer"
+                data-category="equipos"
+              >
+                <span class="font-semibold text-sm tracking-wide">Equipos</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#espacios"
+                class="nav-item flex items-center p-5 cursor-pointer"
+                data-category="espacios"
+              >
+                <span class="font-semibold text-sm tracking-wide">Espacios</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#talento"
+                class="nav-item flex items-center p-5 cursor-pointer"
+                data-category="talento"
+              >
+                <span class="font-semibold text-sm tracking-wide">Talento Humano</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#proyectos"
+                class="nav-item flex items-center p-5 cursor-pointer active"
+                data-category="proyectos"
+              >
+                <span class="font-semibold text-sm tracking-wide">Posibles Proyectos</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Visualization Area -->
+      <main
+        class="flex-1 relative overflow-hidden"
+        id="mainVisualization"
+        style="background: #020617;"
+      >
+        <!-- Animated Grid Pattern Background -->
+        <div class="absolute inset-0" style="background-image: 
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+          background-size: 60px 60px;">
+        </div>
+
+        <!-- Canvas para visualización de red -->
+        <canvas
+          id="networkCanvas"
+          class="absolute inset-0 w-full h-full"
+          role="img"
+          aria-label="Visualización de red interactiva de proyectos"
+        >
+        </canvas>
+
+        <!-- Vista de tarjetas (oculta por defecto) -->
+        <div id="cardsView" class="absolute inset-0 overflow-y-auto p-8 hidden" style="background: #020617;">
+          <div id="cardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            <!-- Las tarjetas se generarán dinámicamente aquí -->
+          </div>
+        </div>
+
+        <div id="tooltip" class="tooltip"></div>
+      </main>
+    </div>
+
+    <!-- Modal de Tipos de Proyecto -->
+    <div
+      id="modal"
+      class="modal-overlay fixed inset-0 z-50 flex items-center justify-center hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitle"
+    >
+      <div
+        class="glassmorphism rounded-2xl p-12 max-w-5xl w-full mx-4"
+        style="box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); max-height: 90vh; overflow-y: auto;"
+      >
+        <div class="flex justify-between items-start mb-10">
+          <h2 id="modalTitle" class="text-4xl font-bold gradient-text">
+            ¿Qué tipo de proyecto quieres hacer hoy?
+          </h2>
+          <button
+            id="closeModalBtn"
+            class="glassmorphism text-slate-700 px-5 py-3 rounded-xl font-semibold text-lg hover:bg-slate-200 hover:scale-110 transition-all duration-300"
+            aria-label="Cerrar modal"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <!-- Podcast -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="podcast">
+            <div class="text-5xl mb-3">🎙️</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Podcast</h3>
+            <p class="text-xs text-slate-400">Serie de audio o episodio único</p>
+          </button>
+
+          <!-- Cortometraje -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="cortometraje">
+            <div class="text-5xl mb-3">🎬</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Cortometraje</h3>
+            <p class="text-xs text-slate-400">Ficción o documental corto</p>
+          </button>
+
+          <!-- Álbum Musical -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="album">
+            <div class="text-5xl mb-3">🎵</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Álbum Musical</h3>
+            <p class="text-xs text-slate-400">Grabación de música original</p>
+          </button>
+
+          <!-- Videoclip -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="videoclip">
+            <div class="text-5xl mb-3">🎥</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Videoclip</h3>
+            <p class="text-xs text-slate-400">Video musical o artístico</p>
+          </button>
+
+          <!-- Documental -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="documental">
+            <div class="text-5xl mb-3">📹</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Documental</h3>
+            <p class="text-xs text-slate-400">Investigación audiovisual</p>
+          </button>
+
+          <!-- Serie Web -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="serie">
+            <div class="text-5xl mb-3">📺</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Serie Web</h3>
+            <p class="text-xs text-slate-400">Contenido episódico digital</p>
+          </button>
+
+          <!-- Videojuego -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="videojuego">
+            <div class="text-5xl mb-3">🎮</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Videojuego</h3>
+            <p class="text-xs text-slate-400">Experiencia interactiva</p>
+          </button>
+
+          <!-- Animación -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="animacion">
+            <div class="text-5xl mb-3">✨</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Animación</h3>
+            <p class="text-xs text-slate-400">2D, 3D o motion graphics</p>
+          </button>
+
+          <!-- Experiencia VR/AR -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="vr">
+            <div class="text-5xl mb-3">🥽</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Experiencia VR/AR</h3>
+            <p class="text-xs text-slate-400">Realidad virtual o aumentada</p>
+          </button>
+
+          <!-- Instalación Multimedia -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="instalacion">
+            <div class="text-5xl mb-3">🖼️</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Instalación</h3>
+            <p class="text-xs text-slate-400">Arte multimedia interactivo</p>
+          </button>
+
+          <!-- Transmisión en Vivo -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="streaming">
+            <div class="text-5xl mb-3">📡</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Streaming</h3>
+            <p class="text-xs text-slate-400">Transmisión en vivo</p>
+          </button>
+
+          <!-- Fotografía -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="fotografia">
+            <div class="text-5xl mb-3">📸</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Fotografía</h3>
+            <p class="text-xs text-slate-400">Sesión o proyecto fotográfico</p>
+          </button>
+
+          <!-- Diseño Sonoro -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="sonido">
+            <div class="text-5xl mb-3">🔊</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Diseño Sonoro</h3>
+            <p class="text-xs text-slate-400">Paisajes y efectos de audio</p>
+          </button>
+
+          <!-- Contenido para Redes -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="redes">
+            <div class="text-5xl mb-3">📱</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Contenido Digital</h3>
+            <p class="text-xs text-slate-400">Para redes sociales</p>
+          </button>
+
+          <!-- Publicidad -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="publicidad">
+            <div class="text-5xl mb-3">📢</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Publicidad</h3>
+            <p class="text-xs text-slate-400">Comercial o campaña</p>
+          </button>
+
+          <!-- Performance -->
+          <button class="project-type-card glassmorphism p-6 rounded-2xl hover:scale-105 transition-all duration-300 text-center" data-type="performance">
+            <div class="text-5xl mb-3">🎭</div>
+            <h3 class="font-bold text-lg text-slate-200 mb-2">Performance</h3>
+            <p class="text-xs text-slate-400">Arte en vivo multimedia</p>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { equiposData, getEquiposByCategoria, searchEquipos } from './equipos-data.js';
+      import { espaciosData, getEspaciosBySubcategoria, searchEspacios } from './espacios-data.js';
+      import { talentoData, getTalentoBySubcategoria, searchTalento } from './talento-data.js';
+      import { proyectosData, getProyectosBySubcategoria, searchProyectos, getRecursosProyecto } from './proyectos-data.js';
+
+      // Modal functionality
+      const modal = document.getElementById('modal');
+      const openModalBtn = document.getElementById('openModalBtn');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+
+      openModalBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      });
+
+      closeModalBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.add('hidden');
+          document.body.style.overflow = 'auto';
+        }
+      });
+
+      // Project type cards functionality
+      const projectTypeCards = document.querySelectorAll('.project-type-card');
+      projectTypeCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const projectType = card.getAttribute('data-type');
+          alert(`¡Excelente! Has seleccionado: ${card.querySelector('h3').textContent}\n\nEn breve te mostraremos los recursos necesarios para tu proyecto.`);
+          modal.classList.add('hidden');
+          document.body.style.overflow = 'auto';
+        });
+      });
+
+      // Mobile menu toggle
+      const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+      const sidebar = document.getElementById('sidebar');
+
+      mobileMenuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full');
+      });
+
+      // Navigation active state y cambio de vista
+      const navItems = document.querySelectorAll('.nav-item');
+      const networkCanvas = document.getElementById('networkCanvas');
+      const cardsView = document.getElementById('cardsView');
+      const cardsContainer = document.getElementById('cardsContainer');
+
+      navItems.forEach((item) => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          navItems.forEach((nav) => nav.classList.remove('active'));
+          item.classList.add('active');
+
+          const category = item.getAttribute('data-category');
+
+          // Si es proyectos, mostrar red
+          if (category === 'proyectos') {
+            networkCanvas.classList.remove('hidden');
+            cardsView.classList.add('hidden');
+          } else {
+            // Si es equipos, espacios o talento, mostrar tarjetas
+            networkCanvas.classList.add('hidden');
+            cardsView.classList.remove('hidden');
+            loadCards(category);
+          }
+
+          // Close mobile menu on selection
+          if (window.innerWidth < 1024) {
+            sidebar.classList.add('-translate-x-full');
+          }
+        });
+      });
+
+      // Función para cargar tarjetas según categoría
+      function loadCards(category) {
+        cardsContainer.innerHTML = '';
+        let data = [];
+        let colorMap = {};
+
+        if (category === 'equipos') {
+          data = equiposData;
+          colorMap = subcategoryColors;
+        } else if (category === 'espacios') {
+          data = espaciosData;
+          colorMap = espaciosSubcategoryColors;
+        } else if (category === 'talento') {
+          data = talentoData;
+          colorMap = talentoSubcategoryColors;
+        }
+
+        data.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          
+          const badgeColor = colorMap[item.subcategoria] || '#666666';
+          
+          card.innerHTML = `
+            <div class="card-badge" style="background: ${badgeColor}20; color: ${badgeColor};">
+              ${item.subcategoria || item.categoria}
+            </div>
+            <h3 class="card-title">${item.nombre}</h3>
+            <p class="card-description">${item.descripcion}</p>
+            ${item.capacidad ? `<div style="margin-top: 0.75rem; font-size: 0.75rem; color: #999;">📊 Capacidad: ${item.capacidad}</div>` : ''}
+            ${item.area ? `<div style="margin-top: 0.25rem; font-size: 0.75rem; color: #999;">📐 Área: ${item.area}</div>` : ''}
+            ${item.equipamiento ? `<div style="margin-top: 0.25rem; font-size: 0.75rem; color: #999;">🎛️ ${item.equipamiento}</div>` : ''}
+          `;
+          
+          // Click en tarjeta para mostrar modal
+          card.addEventListener('click', () => {
+            if (category === 'equipos') {
+              showEquipoModal(item);
+            } else if (category === 'espacios') {
+              showEspacioModal(item);
+            } else if (category === 'talento') {
+              showTalentoModal(item);
+            }
+          });
+          
+          cardsContainer.appendChild(card);
+        });
+      }
+
+      // Network Visualization Canvas
+      const canvas = document.getElementById('networkCanvas');
+      const ctx = canvas.getContext('2d');
+      const tooltip = document.getElementById('tooltip');
+
+      // Set canvas size
+      function resizeCanvas() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
+
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      // Color palette matching categories
+      const categoryColors = {
+        equipos: '#6366f1',
+        espacios: '#14b8a6',
+        talento: '#f97316',
+        proyectos: '#ec4899'
+      };
+
+      // Subcategorías de equipos con colores
+      const subcategoryColors = {
+        audio: '#6366f1',
+        video: '#8b5cf6',
+        iluminacion: '#a855f7',
+        instrumentos: '#c084fc',
+        soporte: '#4f46e5',
+        vr: '#7c3aed'
+      };
+
+      // Subcategorías de espacios con colores
+      const espaciosSubcategoryColors = {
+        principal: '#14b8a6',
+        diseño: '#0d9488',
+        capacitacion: '#0f766e',
+        audio: '#115e59',
+        radio: '#134e4a',
+        estudio: '#0e7490',
+        television: '#06b6d4',
+        postproduccion: '#0891b2',
+        tecnologia: '#0e7490',
+        archivo: '#155e75'
+      };
+
+      // Subcategorías de talento con colores
+      const talentoSubcategoryColors = {
+        imagen: '#f97316',
+        produccion: '#fb923c',
+        postproduccion: '#fdba74',
+        audio: '#ea580c',
+        musica: '#f59e0b',
+        creativo: '#fbbf24',
+        interactivo: '#fb923c',
+        gestion: '#f97316',
+        investigacion: '#ea580c'
+      };
+
+      // Subcategorías de proyectos con colores
+      const proyectosSubcategoryColors = {
+        experimental: '#ec4899',
+        periodismo: '#f472b6',
+        inmersivo: '#f9a8d4',
+        sonoro: '#db2777',
+        instalacion: '#be185d',
+        videojuegos: '#f0abfc',
+        documental: '#e879f9',
+        archivo: '#d946ef',
+        digital: '#c026d3',
+        escenico: '#a21caf'
+      };
+
+      // Variables de zoom y pan
+      let scale = 1;
+      let offsetX = 0;
+      let offsetY = 0;
+      let isDragging = false;
+      let lastMouseX = 0;
+      let lastMouseY = 0;
+
+      // Generar nodos con TODOS LOS PROYECTOS y sus RECURSOS
+      function generateNodesFromProyectos() {
+        const nodes = [];
+        const nodeMap = new Map();
+        let nodeIndex = 0;
+
+        // Generar posiciones en espiral para TODOS los proyectos
+        function generateSpiralPositions(count) {
+          const positions = [];
+          const centerX = 0.5;
+          const centerY = 0.5;
+          const maxRadius = 0.4;
+          const angleStep = (Math.PI * 2) / 5; // 5 proyectos por vuelta
+          
+          for (let i = 0; i < count; i++) {
+            const spiral = Math.floor(i / 5);
+            const angle = (i % 5) * angleStep + (spiral * angleStep / 2);
+            const radius = (spiral + 1) * (maxRadius / Math.ceil(count / 5));
+            
+            positions.push({
+              x: centerX + Math.cos(angle) * radius,
+              y: centerY + Math.sin(angle) * radius
+            });
+          }
+          return positions;
+        }
+
+        const proyectosPositions = generateSpiralPositions(proyectosData.length);
+
+        // 1. CREAR TODOS LOS NODOS DE PROYECTOS
+        proyectosData.forEach((proyecto, index) => {
+          const proyectoNode = {
+            x: proyectosPositions[index].x,
+            y: proyectosPositions[index].y,
+            radius: 18,
+            color: proyectosSubcategoryColors[proyecto.subcategoria] || categoryColors.proyectos,
+            label: proyecto.nombre.split(' ').slice(0, 2).join(' '),
+            category: 'proyecto',
+            subcategoria: proyecto.subcategoria,
+            isPrimary: true,
+            description: proyecto.descripcion,
+            proyectoCompleto: proyecto
+          };
+          nodes.push(proyectoNode);
+          nodeMap.set(`proyecto-${index}`, nodeIndex);
+          nodeIndex++;
+        });
+
+        // 2. CREAR NODOS DE RECURSOS
+        const recursosMap = new Map();
+
+        proyectosData.forEach((proyecto, proyectoIdx) => {
+          const baseNode = nodes[proyectoIdx];
+          let resourceAngle = 0;
+          const angleIncrement = (Math.PI * 2) / (proyecto.equipos.length + proyecto.laboratorios.length + proyecto.perfiles.length);
+
+          // Agregar EQUIPOS
+          proyecto.equipos.forEach(equipoNombre => {
+            if (!recursosMap.has(`equipo-${equipoNombre}`)) {
+              const equipo = equiposData.find(e => e.nombre === equipoNombre);
+              if (equipo) {
+                const distance = 0.06;
+                const recursoNode = {
+                  x: Math.max(0.05, Math.min(0.95, baseNode.x + Math.cos(resourceAngle) * distance)),
+                  y: Math.max(0.05, Math.min(0.95, baseNode.y + Math.sin(resourceAngle) * distance)),
+                  radius: 8,
+                  color: categoryColors.equipos,
+                  label: equipoNombre.split(' ').slice(0, 2).join(' '),
+                  category: 'equipo',
+                  isPrimary: false,
+                  description: equipo.descripcion,
+                  equipoCompleto: equipo
+                };
+                nodes.push(recursoNode);
+                recursosMap.set(`equipo-${equipoNombre}`, nodeIndex);
+                nodeMap.set(`equipo-${equipoNombre}`, nodeIndex);
+                nodeIndex++;
+              }
+            }
+            resourceAngle += angleIncrement;
+          });
+
+          // Agregar ESPACIOS
+          proyecto.laboratorios.forEach(espacioNombre => {
+            if (!recursosMap.has(`espacio-${espacioNombre}`)) {
+              const espacio = espaciosData.find(e => e.nombre === espacioNombre);
+              if (espacio) {
+                const distance = 0.06;
+                const recursoNode = {
+                  x: Math.max(0.05, Math.min(0.95, baseNode.x + Math.cos(resourceAngle) * distance)),
+                  y: Math.max(0.05, Math.min(0.95, baseNode.y + Math.sin(resourceAngle) * distance)),
+                  radius: 8,
+                  color: categoryColors.espacios,
+                  label: espacioNombre.split(' ').slice(0, 2).join(' '),
+                  category: 'espacio',
+                  isPrimary: false,
+                  description: espacio.descripcion,
+                  espacioCompleto: espacio
+                };
+                nodes.push(recursoNode);
+                recursosMap.set(`espacio-${espacioNombre}`, nodeIndex);
+                nodeMap.set(`espacio-${espacioNombre}`, nodeIndex);
+                nodeIndex++;
+              }
+            }
+            resourceAngle += angleIncrement;
+          });
+
+          // Agregar TALENTO
+          proyecto.perfiles.forEach(perfilNombre => {
+            if (!recursosMap.has(`talento-${perfilNombre}`)) {
+              const talento = talentoData.find(t => t.nombre === perfilNombre);
+              if (talento) {
+                const distance = 0.06;
+                const recursoNode = {
+                  x: Math.max(0.05, Math.min(0.95, baseNode.x + Math.cos(resourceAngle) * distance)),
+                  y: Math.max(0.05, Math.min(0.95, baseNode.y + Math.sin(resourceAngle) * distance)),
+                  radius: 8,
+                  color: categoryColors.talento,
+                  label: perfilNombre.split(' ')[0].replace('(a)', ''),
+                  category: 'talento',
+                  isPrimary: false,
+                  description: talento.descripcion,
+                  talentoCompleto: talento
+                };
+                nodes.push(recursoNode);
+                recursosMap.set(`talento-${perfilNombre}`, nodeIndex);
+                nodeMap.set(`talento-${perfilNombre}`, nodeIndex);
+                nodeIndex++;
+              }
+            }
+            resourceAngle += angleIncrement;
+          });
+        });
+
+        return { nodes, nodeMap, recursosMap };
+      }
+
+      // Generar conexiones entre proyectos y recursos
+      function generateConnections(nodes, nodeMap, recursosMap) {
+        const connections = [];
+        const numProyectos = Math.min(15, proyectosData.length);
+
+        // Conectar cada proyecto con sus recursos
+        proyectosData.forEach((proyecto, proyectoIdx) => {
+          if (proyectoIdx >= numProyectos) return;
+
+          // Conectar con equipos
+          proyecto.equipos.forEach(equipoNombre => {
+            const equipoIdx = nodeMap.get(`equipo-${equipoNombre}`);
+            if (equipoIdx !== undefined) {
+              connections.push([proyectoIdx, equipoIdx]);
+            }
+          });
+
+          // Conectar con espacios
+          proyecto.laboratorios.forEach(espacioNombre => {
+            const espacioIdx = nodeMap.get(`espacio-${espacioNombre}`);
+            if (espacioIdx !== undefined) {
+              connections.push([proyectoIdx, espacioIdx]);
+            }
+          });
+
+          // Conectar con talento
+          proyecto.perfiles.forEach(perfilNombre => {
+            const talentoIdx = nodeMap.get(`talento-${perfilNombre}`);
+            if (talentoIdx !== undefined) {
+              connections.push([proyectoIdx, talentoIdx]);
+            }
+          });
+        });
+
+        // Conectar recursos que son compartidos por múltiples proyectos
+        recursosMap.forEach((recursoIdx, recursoKey) => {
+          const proyectosQueUsan = [];
+          
+          proyectosData.forEach((proyecto, proyectoIdx) => {
+            if (proyectoIdx >= numProyectos) return;
+            
+            const [tipo, nombre] = recursoKey.split('-');
+            let usa = false;
+            
+            if (tipo === 'equipo') usa = proyecto.equipos.includes(nombre);
+            else if (tipo === 'espacio') usa = proyecto.laboratorios.includes(nombre);
+            else if (tipo === 'talento') usa = proyecto.perfiles.includes(nombre);
+            
+            if (usa) proyectosQueUsan.push(proyectoIdx);
+          });
+
+          // Si el recurso es usado por múltiples proyectos, conectarlos entre sí
+          if (proyectosQueUsan.length > 1) {
+            for (let i = 0; i < proyectosQueUsan.length - 1; i++) {
+              for (let j = i + 1; j < proyectosQueUsan.length; j++) {
+                // Evitar duplicados
+                const exists = connections.some(([a, b]) => 
+                  (a === proyectosQueUsan[i] && b === proyectosQueUsan[j]) ||
+                  (a === proyectosQueUsan[j] && b === proyectosQueUsan[i])
+                );
+                if (!exists && Math.random() > 0.7) { // Solo algunas conexiones
+                  connections.push([proyectosQueUsan[i], proyectosQueUsan[j]]);
+                }
+              }
+            }
+          }
+        });
+
+        return connections;
+      }
+
+      const { nodes, nodeMap, recursosMap } = generateNodesFromProyectos();
+      const connections = generateConnections(nodes, nodeMap, recursosMap);
+
+      console.log(`✅ Red generada: ${nodes.length} nodos totales`);
+      console.log(`   - ${proyectosData.length} proyectos (rosa/magenta)`);
+      console.log(`   - Equipos (azul), Espacios (teal), Talento (naranja)`);
+      console.log(`   - ${connections.length} conexiones`);
+
+      let hoveredNode = null;
+      let animationFrame = 0;
+
+      // Funciones de transformación con zoom y pan
+      function screenToWorld(screenX, screenY) {
+        return {
+          x: (screenX - offsetX) / scale,
+          y: (screenY - offsetY) / scale
+        };
+      }
+
+      function worldToScreen(worldX, worldY) {
+        return {
+          x: worldX * scale + offsetX,
+          y: worldY * scale + offsetY
+        };
+      }
+
+      function drawNetwork() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+
+        // Aplicar transformaciones de zoom y pan
+        ctx.translate(offsetX, offsetY);
+        ctx.scale(scale, scale);
+
+        // Draw connections with gradient
+        connections.forEach(([i, j]) => {
+          const node1 = nodes[i];
+          const node2 = nodes[j];
+
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+          ctx.lineWidth = 1 / scale;
+          ctx.beginPath();
+          ctx.moveTo(node1.x * canvas.width, node1.y * canvas.height);
+          ctx.lineTo(node2.x * canvas.width, node2.y * canvas.height);
+          ctx.stroke();
+        });
+
+        // Draw nodes con efecto 3D (esfera)
+        nodes.forEach((node, index) => {
+          const x = node.x * canvas.width;
+          const y = node.y * canvas.height;
+          const radius = node.radius;
+
+          // Outer glow effect only for hovered nodes
+          if (hoveredNode === index) {
+            const glowRadius = radius + 12;
+            
+            const outerGlow = ctx.createRadialGradient(x, y, radius, x, y, glowRadius);
+            outerGlow.addColorStop(0, node.color + 'AA');
+            outerGlow.addColorStop(0.5, node.color + '40');
+            outerGlow.addColorStop(1, node.color + '00');
+
+            ctx.fillStyle = outerGlow;
+            ctx.beginPath();
+            ctx.arc(x, y, glowRadius, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          // Efecto de esfera 3D con gradiente radial
+          const sphereGradient = ctx.createRadialGradient(
+            x - radius * 0.3,
+            y - radius * 0.3,
+            radius * 0.1,
+            x,
+            y,
+            radius
+          );
+          
+          // Highlight (luz)
+          sphereGradient.addColorStop(0, lightenColor(node.color, 40));
+          // Color medio
+          sphereGradient.addColorStop(0.5, node.color);
+          // Sombra
+          sphereGradient.addColorStop(1, darkenColor(node.color, 30));
+
+          ctx.fillStyle = sphereGradient;
+          ctx.beginPath();
+          ctx.arc(x, y, radius, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Borde sutil
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+          ctx.lineWidth = 1 / scale;
+          ctx.stroke();
+
+          // Brillo especular (reflejo de luz)
+          const specularGradient = ctx.createRadialGradient(
+            x - radius * 0.4,
+            y - radius * 0.4,
+            0,
+            x - radius * 0.4,
+            y - radius * 0.4,
+            radius * 0.5
+          );
+          specularGradient.addColorStop(0, 'rgba(255, 255, 255, 0.6)');
+          specularGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+          
+          ctx.fillStyle = specularGradient;
+          ctx.beginPath();
+          ctx.arc(x - radius * 0.3, y - radius * 0.3, radius * 0.4, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Inner ring for primary nodes (proyectos)
+          if (node.isPrimary) {
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.lineWidth = 1.5 / scale;
+            ctx.beginPath();
+            ctx.arc(x, y, radius - 2, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+
+          // Iconos removidos para mantener las esferas limpias
+
+          // Highlight effect on hover
+          if (hoveredNode === index) {
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.lineWidth = 2.5 / scale;
+            ctx.beginPath();
+            ctx.arc(x, y, radius + 4, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+        });
+
+        ctx.restore();
+        animationFrame++;
+        requestAnimationFrame(drawNetwork);
+      }
+
+      // Funciones auxiliares para iluminar y oscurecer colores
+      function lightenColor(color, percent) {
+        const num = parseInt(color.replace('#', ''), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = Math.min(255, (num >> 16) + amt);
+        const G = Math.min(255, (num >> 8 & 0x00FF) + amt);
+        const B = Math.min(255, (num & 0x0000FF) + amt);
+        return `rgb(${R}, ${G}, ${B})`;
+      }
+
+      function darkenColor(color, percent) {
+        const num = parseInt(color.replace('#', ''), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = Math.max(0, (num >> 16) - amt);
+        const G = Math.max(0, (num >> 8 & 0x00FF) - amt);
+        const B = Math.max(0, (num & 0x0000FF) - amt);
+        return `rgb(${R}, ${G}, ${B})`;
+      }
+
+      // Mouse interaction con zoom y pan
+      canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        if (isDragging) {
+          const dx = mouseX - lastMouseX;
+          const dy = mouseY - lastMouseY;
+          offsetX += dx;
+          offsetY += dy;
+          lastMouseX = mouseX;
+          lastMouseY = mouseY;
+          return;
+        }
+
+        let found = false;
+
+        nodes.forEach((node, index) => {
+          const screenPos = worldToScreen(node.x * canvas.width, node.y * canvas.height);
+          const distance = Math.sqrt((mouseX - screenPos.x) ** 2 + (mouseY - screenPos.y) ** 2);
+
+          if (distance < node.radius * scale) {
+            hoveredNode = index;
+            found = true;
+
+            // Show tooltip
+            let categoryLabel = '';
+            if (node.category === 'proyecto') categoryLabel = 'PROYECTO';
+            else if (node.category === 'equipo') categoryLabel = 'EQUIPO';
+            else if (node.category === 'espacio') categoryLabel = 'ESPACIO';
+            else if (node.category === 'talento') categoryLabel = 'TALENTO';
+
+            let tooltipContent = `<div style="font-size: 0.65rem; opacity: 0.7; text-transform: uppercase; margin-bottom: 4px;">${categoryLabel}</div>`;
+            tooltipContent += `<strong>${node.label}</strong>`;
+            if (node.description) {
+              tooltipContent += `<br><span style="font-size: 0.75rem; opacity: 0.9;">${node.description.substring(0, 80)}${node.description.length > 80 ? '...' : ''}</span>`;
+            }
+            if (node.subcategoria) {
+              tooltipContent += `<br><span style="font-size: 0.7rem; opacity: 0.7; text-transform: uppercase;">${node.subcategoria}</span>`;
+            }
+            
+            tooltip.innerHTML = tooltipContent;
+            tooltip.style.left = `${e.clientX + 1}px`;
+            tooltip.style.top = `${e.clientY + 1}px`;
+            tooltip.style.maxWidth = '280px';
+            tooltip.classList.add('show');
+
+            canvas.style.cursor = 'pointer';
+          }
+        });
+
+        if (!found) {
+          hoveredNode = null;
+          tooltip.classList.remove('show');
+          canvas.style.cursor = isDragging ? 'grabbing' : 'grab';
+        }
+      });
+
+      // Mouse down para pan
+      canvas.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        lastMouseX = e.clientX - canvas.getBoundingClientRect().left;
+        lastMouseY = e.clientY - canvas.getBoundingClientRect().top;
+        canvas.style.cursor = 'grabbing';
+      });
+
+      // Mouse up
+      canvas.addEventListener('mouseup', () => {
+        isDragging = false;
+        canvas.style.cursor = 'grab';
+      });
+
+      // Wheel para zoom
+      canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        // Calcular el punto del mundo antes del zoom
+        const worldBefore = screenToWorld(mouseX, mouseY);
+
+        // Aplicar zoom
+        const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
+        const newScale = Math.max(0.5, Math.min(5, scale * zoomFactor));
+        
+        scale = newScale;
+
+        // Calcular el punto del mundo después del zoom
+        const worldAfter = screenToWorld(mouseX, mouseY);
+
+        // Ajustar offset para mantener el punto bajo el mouse
+        offsetX += (worldAfter.x - worldBefore.x) * scale;
+        offsetY += (worldAfter.y - worldBefore.y) * scale;
+      }, { passive: false });
+
+      canvas.style.cursor = 'grab';
+
+      // Click en nodos para mostrar información completa
+      canvas.addEventListener('click', (e) => {
+        if (isDragging) return;
+
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        nodes.forEach((node, index) => {
+          const screenPos = worldToScreen(node.x * canvas.width, node.y * canvas.height);
+          const distance = Math.sqrt((mouseX - screenPos.x) ** 2 + (mouseY - screenPos.y) ** 2);
+
+          if (distance < node.radius * scale) {
+            if (node.equipoCompleto) {
+              showEquipoModal(node.equipoCompleto);
+            } else if (node.espacioCompleto) {
+              showEspacioModal(node.espacioCompleto);
+            } else if (node.talentoCompleto) {
+              showTalentoModal(node.talentoCompleto);
+            } else if (node.proyectoCompleto) {
+              showProyectoModal(node.proyectoCompleto);
+            }
+          }
+        });
+      });
+
+      // Función para mostrar modal de equipo
+      function showEquipoModal(equipo) {
+        const modalContent = `
+          <div class="glassmorphism rounded-2xl p-8 max-w-2xl w-full mx-4" style="box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
+            <div class="flex justify-between items-start mb-6">
+              <h2 class="text-3xl font-bold gradient-text">${equipo.nombre}</h2>
+              <button onclick="closeEquipoModal()" class="glassmorphism text-slate-300 px-5 py-3 rounded-xl font-semibold text-lg hover:bg-slate-700 hover:scale-110 transition-all duration-300">✕</button>
+            </div>
+            <div class="space-y-4">
+              <div>
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold" style="background: ${subcategoryColors[equipo.subcategoria]}40; color: ${subcategoryColors[equipo.subcategoria]};">
+                  ${equipo.subcategoria.toUpperCase()}
+                </span>
+              </div>
+              <p class="text-slate-300 leading-relaxed">${equipo.descripcion}</p>
+              <div class="pt-4 border-t border-slate-700">
+                <button class="cta-button text-white px-6 py-3 rounded-xl font-semibold text-sm" onclick="closeEquipoModal()">
+                  Solicitar Equipo
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        const modalDiv = document.createElement('div');
+        modalDiv.id = 'equipoModal';
+        modalDiv.className = 'modal-overlay fixed inset-0 z-50 flex items-center justify-center';
+        modalDiv.innerHTML = modalContent;
+        document.body.appendChild(modalDiv);
+        document.body.style.overflow = 'hidden';
+      }
+
+      // Función para mostrar modal de espacio
+      function showEspacioModal(espacio) {
+        const modalContent = `
+          <div class="glassmorphism rounded-2xl p-8 max-w-3xl w-full mx-4" style="box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
+            <div class="flex justify-between items-start mb-6">
+              <div>
+                <h2 class="text-3xl font-bold gradient-text mb-2">${espacio.nombre}</h2>
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold" style="background: ${espaciosSubcategoryColors[espacio.subcategoria]}40; color: ${espaciosSubcategoryColors[espacio.subcategoria]};">
+                  ${espacio.subcategoria.toUpperCase()}
+                </span>
+              </div>
+              <button onclick="closeEspacioModal()" class="glassmorphism text-slate-300 px-5 py-3 rounded-xl font-semibold text-lg hover:bg-slate-700 hover:scale-110 transition-all duration-300">✕</button>
+            </div>
+            <div class="space-y-4">
+              <p class="text-slate-300 leading-relaxed">${espacio.descripcion}</p>
+              ${espacio.capacidad ? `
+                <div class="flex items-center gap-2 text-slate-400">
+                  <span class="text-xl">👥</span>
+                  <span class="text-sm font-medium">Capacidad: ${espacio.capacidad}</span>
+                </div>
+              ` : ''}
+              ${espacio.area ? `
+                <div class="flex items-center gap-2 text-slate-400">
+                  <span class="text-xl">📐</span>
+                  <span class="text-sm font-medium">Área: ${espacio.area}</span>
+                </div>
+              ` : ''}
+              ${espacio.equipamiento ? `
+                <div class="glassmorphism p-4 rounded-xl">
+                  <h3 class="text-sm font-bold text-slate-200 mb-2">🎛️ Equipamiento</h3>
+                  <p class="text-sm text-slate-400">${espacio.equipamiento}</p>
+                </div>
+              ` : ''}
+              <div class="pt-4 border-t border-slate-700 flex gap-3">
+                <button class="cta-button text-white px-6 py-3 rounded-xl font-semibold text-sm flex-1" onclick="closeEspacioModal()">
+                  Reservar Espacio
+                </button>
+                <button class="glassmorphism text-slate-300 px-6 py-3 rounded-xl font-semibold text-sm hover:bg-slate-700 transition-all" onclick="closeEspacioModal()">
+                  Ver Disponibilidad
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        const modalDiv = document.createElement('div');
+        modalDiv.id = 'espacioModal';
+        modalDiv.className = 'modal-overlay fixed inset-0 z-50 flex items-center justify-center';
+        modalDiv.innerHTML = modalContent;
+        document.body.appendChild(modalDiv);
+        document.body.style.overflow = 'hidden';
+      }
+
+      // Función global para cerrar modal de equipo
+      window.closeEquipoModal = function() {
+        const equipoModal = document.getElementById('equipoModal');
+        if (equipoModal) {
+          equipoModal.remove();
+          document.body.style.overflow = 'auto';
+        }
+      };
+
+      // Función para mostrar modal de talento
+      function showTalentoModal(talento) {
+        const modalContent = `
+          <div class="glassmorphism rounded-2xl p-8 max-w-2xl w-full mx-4" style="box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
+            <div class="flex justify-between items-start mb-6">
+              <div>
+                <h2 class="text-3xl font-bold gradient-text mb-2">${talento.nombre}</h2>
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold" style="background: ${talentoSubcategoryColors[talento.subcategoria]}40; color: ${talentoSubcategoryColors[talento.subcategoria]};">
+                  ${talento.subcategoria.toUpperCase()}
+                </span>
+              </div>
+              <button onclick="closeTalentoModal()" class="glassmorphism text-slate-300 px-5 py-3 rounded-xl font-semibold text-lg hover:bg-slate-700 hover:scale-110 transition-all duration-300">✕</button>
+            </div>
+            <div class="space-y-4">
+              <div class="glassmorphism p-4 rounded-xl">
+                <h3 class="text-sm font-bold text-slate-200 mb-2">🎯 Funciones del rol</h3>
+                <p class="text-slate-300 leading-relaxed">${talento.descripcion}</p>
+              </div>
+              <div class="pt-4 border-t border-slate-700 flex gap-3">
+                <button class="cta-button text-white px-6 py-3 rounded-xl font-semibold text-sm flex-1" onclick="closeTalentoModal()">
+                  Contactar Profesional
+                </button>
+                <button class="glassmorphism text-slate-300 px-6 py-3 rounded-xl font-semibold text-sm hover:bg-slate-700 transition-all" onclick="closeTalentoModal()">
+                  Ver Portafolio
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        const modalDiv = document.createElement('div');
+        modalDiv.id = 'talentoModal';
+        modalDiv.className = 'modal-overlay fixed inset-0 z-50 flex items-center justify-center';
+        modalDiv.innerHTML = modalContent;
+        document.body.appendChild(modalDiv);
+        document.body.style.overflow = 'hidden';
+      }
+
+      // Función global para cerrar modal de espacio
+      window.closeEspacioModal = function() {
+        const espacioModal = document.getElementById('espacioModal');
+        if (espacioModal) {
+          espacioModal.remove();
+          document.body.style.overflow = 'auto';
+        }
+      };
+
+      // Función para mostrar modal de proyecto
+      function showProyectoModal(proyecto) {
+        const modalContent = `
+          <div class="glassmorphism rounded-2xl p-8 max-w-4xl w-full mx-4" style="box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); max-height: 90vh; overflow-y: auto;">
+            <div class="flex justify-between items-start mb-6">
+              <div>
+                <h2 class="text-3xl font-bold gradient-text mb-2">${proyecto.nombre}</h2>
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold" style="background: ${proyectosSubcategoryColors[proyecto.subcategoria]}40; color: ${proyectosSubcategoryColors[proyecto.subcategoria]};">
+                  ${proyecto.subcategoria.toUpperCase()}
+                </span>
+              </div>
+              <button onclick="closeProyectoModal()" class="glassmorphism text-slate-300 px-5 py-3 rounded-xl font-semibold text-lg hover:bg-slate-700 hover:scale-110 transition-all duration-300">✕</button>
+            </div>
+            <div class="space-y-6">
+              <p class="text-slate-300 leading-relaxed">${proyecto.descripcion}</p>
+              
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="glassmorphism p-4 rounded-xl">
+                  <h3 class="text-sm font-bold text-slate-200 mb-3 flex items-center gap-2">
+                    <span class="text-xl">🏢</span> Laboratorios (${proyecto.laboratorios.length})
+                  </h3>
+                  <ul class="space-y-2">
+                    ${proyecto.laboratorios.slice(0, 3).map(lab => `
+                      <li class="text-xs text-slate-400">• ${lab}</li>
+                    `).join('')}
+                    ${proyecto.laboratorios.length > 3 ? `<li class="text-xs text-slate-500">+ ${proyecto.laboratorios.length - 3} más</li>` : ''}
+                  </ul>
+                </div>
+                
+                <div class="glassmorphism p-4 rounded-xl">
+                  <h3 class="text-sm font-bold text-slate-200 mb-3 flex items-center gap-2">
+                    <span class="text-xl">⚙️</span> Equipos (${proyecto.equipos.length})
+                  </h3>
+                  <ul class="space-y-2">
+                    ${proyecto.equipos.slice(0, 3).map(equipo => `
+                      <li class="text-xs text-slate-400">• ${equipo}</li>
+                    `).join('')}
+                    ${proyecto.equipos.length > 3 ? `<li class="text-xs text-slate-500">+ ${proyecto.equipos.length - 3} más</li>` : ''}
+                  </ul>
+                </div>
+                
+                <div class="glassmorphism p-4 rounded-xl">
+                  <h3 class="text-sm font-bold text-slate-200 mb-3 flex items-center gap-2">
+                    <span class="text-xl">👥</span> Perfiles (${proyecto.perfiles.length})
+                  </h3>
+                  <ul class="space-y-2">
+                    ${proyecto.perfiles.slice(0, 3).map(perfil => `
+                      <li class="text-xs text-slate-400">• ${perfil}</li>
+                    `).join('')}
+                    ${proyecto.perfiles.length > 3 ? `<li class="text-xs text-slate-500">+ ${proyecto.perfiles.length - 3} más</li>` : ''}
+                  </ul>
+                </div>
+              </div>
+              
+              <div class="pt-4 border-t border-slate-700 flex gap-3">
+                <button class="cta-button text-white px-6 py-3 rounded-xl font-semibold text-sm flex-1" onclick="closeProyectoModal()">
+                  Iniciar Proyecto
+                </button>
+                <button class="glassmorphism text-slate-300 px-6 py-3 rounded-xl font-semibold text-sm hover:bg-slate-700 transition-all" onclick="closeProyectoModal()">
+                  Ver Recursos Completos
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        const modalDiv = document.createElement('div');
+        modalDiv.id = 'proyectoModal';
+        modalDiv.className = 'modal-overlay fixed inset-0 z-50 flex items-center justify-center';
+        modalDiv.innerHTML = modalContent;
+        document.body.appendChild(modalDiv);
+        document.body.style.overflow = 'hidden';
+      }
+
+      // Función global para cerrar modal de talento
+      window.closeTalentoModal = function() {
+        const talentoModal = document.getElementById('talentoModal');
+        if (talentoModal) {
+          talentoModal.remove();
+          document.body.style.overflow = 'auto';
+        }
+      };
+
+      // Función global para cerrar modal de proyecto
+      window.closeProyectoModal = function() {
+        const proyectoModal = document.getElementById('proyectoModal');
+        if (proyectoModal) {
+          proyectoModal.remove();
+          document.body.style.overflow = 'auto';
+        }
+      };
+
+      canvas.addEventListener('mouseleave', () => {
+        hoveredNode = null;
+        tooltip.classList.remove('show');
+        canvas.style.cursor = 'default';
+      });
+
+      // Start animation
+      drawNetwork();
+
+    </script>
+  </body>
+</html>
