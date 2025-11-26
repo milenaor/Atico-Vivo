@@ -6,7 +6,7 @@
     <title>Ático Vivo</title>
     <meta
       name="description"
-      content="Ático Vivo es una plataforma moderna de proyectos colaborativos que conecta equipos, espacios, talento humano y posibles proyectos."
+      content="Ático Vivo es una plataforma que propone posibles proyectos que conecta equipos, espacios, talento humano y posibles proyectos del Centro Ático de la Universidad Javeriana."
     />
 
     <style>
@@ -1253,7 +1253,7 @@
           <div class="glassmorphism rounded-2xl p-8 max-w-2xl w-full mx-4" style="box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
             <div class="flex justify-between items-start mb-6">
               <h2 class="text-3xl font-bold gradient-text">${equipo.nombre}</h2>
-              <button onclick="closeEquipoModal()" class="glassmorphism text-slate-300 px-5 py-3 rounded-xl font-semibold text-lg hover:bg-slate-700 hover:scale-110 transition-all duration-300">✕</button>
+              <button onclick="closeEquipoModal()" class="glassmorphism text-white px-5 py-3 rounded-xl font-semibold text-lg hover:bg-slate-700 hover:scale-110 transition-all duration-300">✕</button>
             </div>
             <div class="space-y-4">
               <div>
@@ -1261,7 +1261,7 @@
                   ${equipo.subcategoria.toUpperCase()}
                 </span>
               </div>
-              <p class="text-slate-300 leading-relaxed">${equipo.descripcion}</p>
+              <p class="text-white leading-relaxed">${equipo.descripcion}</p>
               <div class="pt-4 border-t border-slate-700">
                 <button class="cta-button text-white px-6 py-3 rounded-xl font-semibold text-sm" onclick="closeEquipoModal()">
                   Solicitar Equipo
@@ -1290,33 +1290,33 @@
                   ${espacio.subcategoria.toUpperCase()}
                 </span>
               </div>
-              <button onclick="closeEspacioModal()" class="glassmorphism text-slate-300 px-5 py-3 rounded-xl font-semibold text-lg hover:bg-slate-700 hover:scale-110 transition-all duration-300">✕</button>
+              <button onclick="closeEspacioModal()" class="glassmorphism text-white px-5 py-3 rounded-xl font-semibold text-lg hover:bg-slate-700 hover:scale-110 transition-all duration-300">✕</button>
             </div>
             <div class="space-y-4">
-              <p class="text-slate-300 leading-relaxed">${espacio.descripcion}</p>
+              <p class="text-white leading-relaxed">${espacio.descripcion}</p>
               ${espacio.capacidad ? `
-                <div class="flex items-center gap-2 text-slate-400">
+                <div class="flex items-center gap-2 text-slate-300">
                   <span class="text-xl">👥</span>
                   <span class="text-sm font-medium">Capacidad: ${espacio.capacidad}</span>
                 </div>
               ` : ''}
               ${espacio.area ? `
-                <div class="flex items-center gap-2 text-slate-400">
+                <div class="flex items-center gap-2 text-slate-300">
                   <span class="text-xl">📐</span>
                   <span class="text-sm font-medium">Área: ${espacio.area}</span>
                 </div>
               ` : ''}
               ${espacio.equipamiento ? `
                 <div class="glassmorphism p-4 rounded-xl">
-                  <h3 class="text-sm font-bold text-slate-200 mb-2">🎛️ Equipamiento</h3>
-                  <p class="text-sm text-slate-400">${espacio.equipamiento}</p>
+                  <h3 class="text-sm font-bold text-white mb-2">🎛️ Equipamiento</h3>
+                  <p class="text-sm text-slate-300">${espacio.equipamiento}</p>
                 </div>
               ` : ''}
               <div class="pt-4 border-t border-slate-700 flex gap-3">
                 <button class="cta-button text-white px-6 py-3 rounded-xl font-semibold text-sm flex-1" onclick="closeEspacioModal()">
                   Reservar Espacio
                 </button>
-                <button class="glassmorphism text-slate-300 px-6 py-3 rounded-xl font-semibold text-sm hover:bg-slate-700 transition-all" onclick="closeEspacioModal()">
+                <button class="glassmorphism text-white px-6 py-3 rounded-xl font-semibold text-sm hover:bg-slate-700 transition-all" onclick="closeEspacioModal()">
                   Ver Disponibilidad
                 </button>
               </div>
@@ -1352,18 +1352,18 @@
                   ${talento.subcategoria.toUpperCase()}
                 </span>
               </div>
-              <button onclick="closeTalentoModal()" class="glassmorphism text-slate-300 px-5 py-3 rounded-xl font-semibold text-lg hover:bg-slate-700 hover:scale-110 transition-all duration-300">✕</button>
+              <button onclick="closeTalentoModal()" class="glassmorphism text-white px-5 py-3 rounded-xl font-semibold text-lg hover:bg-slate-700 hover:scale-110 transition-all duration-300">✕</button>
             </div>
             <div class="space-y-4">
               <div class="glassmorphism p-4 rounded-xl">
-                <h3 class="text-sm font-bold text-slate-200 mb-2">🎯 Funciones del rol</h3>
-                <p class="text-slate-300 leading-relaxed">${talento.descripcion}</p>
+                <h3 class="text-sm font-bold text-white mb-2">🎯 Funciones del rol</h3>
+                <p class="text-white leading-relaxed">${talento.descripcion}</p>
               </div>
               <div class="pt-4 border-t border-slate-700 flex gap-3">
                 <button class="cta-button text-white px-6 py-3 rounded-xl font-semibold text-sm flex-1" onclick="closeTalentoModal()">
                   Contactar Profesional
                 </button>
-                <button class="glassmorphism text-slate-300 px-6 py-3 rounded-xl font-semibold text-sm hover:bg-slate-700 transition-all" onclick="closeTalentoModal()">
+                <button class="glassmorphism text-white px-6 py-3 rounded-xl font-semibold text-sm hover:bg-slate-700 transition-all" onclick="closeTalentoModal()">
                   Ver Portafolio
                 </button>
               </div>
@@ -1399,45 +1399,45 @@
                   ${proyecto.subcategoria.toUpperCase()}
                 </span>
               </div>
-              <button onclick="closeProyectoModal()" class="glassmorphism text-slate-300 px-5 py-3 rounded-xl font-semibold text-lg hover:bg-slate-700 hover:scale-110 transition-all duration-300">✕</button>
+              <button onclick="closeProyectoModal()" class="glassmorphism text-white px-5 py-3 rounded-xl font-semibold text-lg hover:bg-slate-700 hover:scale-110 transition-all duration-300">✕</button>
             </div>
             <div class="space-y-6">
-              <p class="text-slate-300 leading-relaxed">${proyecto.descripcion}</p>
+              <p class="text-white leading-relaxed">${proyecto.descripcion}</p>
               
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="glassmorphism p-4 rounded-xl">
-                  <h3 class="text-sm font-bold text-slate-200 mb-3 flex items-center gap-2">
+                  <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
                     <span class="text-xl">🏢</span> Laboratorios (${proyecto.laboratorios.length})
                   </h3>
                   <ul class="space-y-2">
                     ${proyecto.laboratorios.slice(0, 3).map(lab => `
-                      <li class="text-xs text-slate-400">• ${lab}</li>
+                      <li class="text-xs text-white">• ${lab}</li>
                     `).join('')}
-                    ${proyecto.laboratorios.length > 3 ? `<li class="text-xs text-slate-500">+ ${proyecto.laboratorios.length - 3} más</li>` : ''}
+                    ${proyecto.laboratorios.length > 3 ? `<li class="text-xs text-white">+ ${proyecto.laboratorios.length - 3} más</li>` : ''}
                   </ul>
                 </div>
                 
                 <div class="glassmorphism p-4 rounded-xl">
-                  <h3 class="text-sm font-bold text-slate-200 mb-3 flex items-center gap-2">
+                  <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
                     <span class="text-xl">⚙️</span> Equipos (${proyecto.equipos.length})
                   </h3>
                   <ul class="space-y-2">
                     ${proyecto.equipos.slice(0, 3).map(equipo => `
-                      <li class="text-xs text-slate-400">• ${equipo}</li>
+                      <li class="text-xs text-white">• ${equipo}</li>
                     `).join('')}
-                    ${proyecto.equipos.length > 3 ? `<li class="text-xs text-slate-500">+ ${proyecto.equipos.length - 3} más</li>` : ''}
+                    ${proyecto.equipos.length > 3 ? `<li class="text-xs text-white">+ ${proyecto.equipos.length - 3} más</li>` : ''}
                   </ul>
                 </div>
                 
                 <div class="glassmorphism p-4 rounded-xl">
-                  <h3 class="text-sm font-bold text-slate-200 mb-3 flex items-center gap-2">
+                  <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
                     <span class="text-xl">👥</span> Perfiles (${proyecto.perfiles.length})
                   </h3>
                   <ul class="space-y-2">
                     ${proyecto.perfiles.slice(0, 3).map(perfil => `
-                      <li class="text-xs text-slate-400">• ${perfil}</li>
+                      <li class="text-xs text-white">• ${perfil}</li>
                     `).join('')}
-                    ${proyecto.perfiles.length > 3 ? `<li class="text-xs text-slate-500">+ ${proyecto.perfiles.length - 3} más</li>` : ''}
+                    ${proyecto.perfiles.length > 3 ? `<li class="text-xs text-white">+ ${proyecto.perfiles.length - 3} más</li>` : ''}
                   </ul>
                 </div>
               </div>
@@ -1446,7 +1446,7 @@
                 <button class="cta-button text-white px-6 py-3 rounded-xl font-semibold text-sm flex-1" onclick="closeProyectoModal()">
                   Iniciar Proyecto
                 </button>
-                <button class="glassmorphism text-slate-300 px-6 py-3 rounded-xl font-semibold text-sm hover:bg-slate-700 transition-all" onclick="closeProyectoModal()">
+                <button class="glassmorphism text-white px-6 py-3 rounded-xl font-semibold text-sm hover:bg-slate-700 transition-all" onclick="closeProyectoModal()">
                   Ver Recursos Completos
                 </button>
               </div>

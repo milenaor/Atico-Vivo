@@ -540,7 +540,7 @@ video {
 }
 .text-neutral-foreground {
   --tw-text-opacity: 1;
-  color: hsl(210 20% 15% / var(--tw-text-opacity));
+  color: hsl(0deg 0% 100%);
 }
 .text-primary-foreground {
   --tw-text-opacity: 1;
